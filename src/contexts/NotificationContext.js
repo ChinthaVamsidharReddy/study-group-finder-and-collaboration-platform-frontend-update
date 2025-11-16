@@ -490,7 +490,7 @@ export const NotificationProvider = ({ children }) => {
     if (!userId || !token) return;
     const stompClient = getStompClient(token);
 
-    fetch(`${API_BASE}/api/groups/joined/${userId}`, {
+    fetch(`https://study-group-finder-and-collaboration.onrender.com/api/groups/joined/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
