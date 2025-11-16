@@ -317,7 +317,7 @@ const handleViewJoinRequests = async (group) => {
       };
 
       // API call to create group
-      const res = await fetch("http://localhost:8080/api/groups", {
+      const res = await fetch("https://study-group-finder-and-collaboration.onrender.com/api/groups", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(newGroup),
