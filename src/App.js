@@ -58,7 +58,7 @@ function AppContent() {
   const isForgetpassword=location.pathname.startsWith("/forgot-password")
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Toast Container for global popups */}
       <ToastContainer
         position="top-right"

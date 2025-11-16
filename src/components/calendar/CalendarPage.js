@@ -14,10 +14,10 @@ import SessionForm from '../chat/SessionForm';
 import SessionDetailModal from '../chat/SessionDetailModal';
 import { cn } from '../../lib/utils';
 
-// const API_BASE = "https://study-group-finder-and-collaboration.onrender.com/api";
+const API_BASE =process.env.REACT_APP_API_URL;
 
-const API_BASE="http://localhost:8080/api"
 
+// console.log(API_BASE,"api in the calender class check it.")
 const CalendarPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [sessions, setSessions] = useState([]);
@@ -35,7 +35,7 @@ const CalendarPage = () => {
   useEffect(() => {
     const loadUserGroups = async () => {
       try {
-        const response = await fetch(`${API_BASE}/groups/joined/${userId}`, {
+        const response = await fetch(`${API_BASE}/api/groups/joined/${userId}`, {
           headers: { 
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -66,7 +66,7 @@ const CalendarPage = () => {
         
         for (const group of userGroups) {
           try {
-            const response = await fetch(`${API_BASE}/groups/${group.id}/sessions`, {
+            const response = await fetch(`${API_BASE}/api/groups/${group.id}/sessions`, {
               headers: { 
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'

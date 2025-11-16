@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { ChatBubbleLeftIcon, ArrowRightIcon, BellSlashIcon, ArchiveBoxIcon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { cn } from '../../lib/utils';
 
+const API_BASE=process.env.REACT_APP_API_URL;
 const ChatList = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -27,12 +28,10 @@ const ChatList = () => {
       try {
         // Fetch both created and joined groups with token
         const [createdRes, joinedRes] = await Promise.all([
-          // fetch(`https://study-group-finder-and-collaboration.onrender.com/api/groups/created/${id}`, {
-          fetch(`http://localhost:8080/api/groups/created/${id}`, {
+          fetch(`${API_BASE}/api/groups/created/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          // fetch(`https://study-group-finder-and-collaboration.onrender.com/api/groups/joined/${id}`, {
-           fetch(`http://localhost:8080/api/groups/joined/${id}`, {
+           fetch(`${API_BASE}/api/groups/joined/${id}`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

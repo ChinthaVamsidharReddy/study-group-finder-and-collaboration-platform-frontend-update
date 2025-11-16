@@ -479,7 +479,7 @@ const NotificationContext = createContext();
 export const useNotifications = () => useContext(NotificationContext);
 
 const shownNotifications = new Set(); // Prevent duplicate popups
-
+const API_BASE=process.env.REACT_APP_API_BASE_URL 
 export const NotificationProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
   const token = localStorage.getItem("token");
@@ -490,7 +490,7 @@ export const NotificationProvider = ({ children }) => {
     if (!userId || !token) return;
     const stompClient = getStompClient(token);
 
-    fetch(`http://localhost:8080/api/groups/joined/${userId}`, {
+    fetch(`${API_BASE}/api/groups/joined/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())

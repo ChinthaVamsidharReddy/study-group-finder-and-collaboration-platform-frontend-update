@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API_BASE_URL = "http://localhost:8080/auth";
+const API_BASE_URL = process.env.REACT_APP_API_URL
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -24,7 +24,7 @@ export default function ForgotPassword() {
   const requestOtp = async () => {
     setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}/forgot-password`, { email });
+      await axios.post(`${API_BASE_URL}/auth/forgot-password`, { email });
       setStep(2);
       showMessage("OTP sent to your email!", "success");
     } catch (err) {
@@ -38,7 +38,7 @@ export default function ForgotPassword() {
   const verifyOtp = async () => {
     setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}/verify-otp`, { email, otp });
+      await axios.post(`${API_BASE_URL}/auth/verify-otp`, { email, otp });
       setStep(3);
       showMessage("OTP verified successfully!", "success");
     } catch (err) {
@@ -56,7 +56,7 @@ export default function ForgotPassword() {
     }
     setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}/reset-password`, {
+      await axios.post(`${API_BASE_URL}/auth/reset-password`, {
         email,
         newPassword,
       });

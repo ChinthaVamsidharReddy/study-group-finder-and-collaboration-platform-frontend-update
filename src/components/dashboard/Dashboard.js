@@ -19,7 +19,7 @@ import {
 import { cn } from '../../lib/utils';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui';
 
-const API_BASE_URL = "http://localhost:8080/courses"; 
+const API_BASE_URL = process.env.REACT_APP_API_URL 
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -48,7 +48,7 @@ const Dashboard = () => {
         // Try to fetch from backend, but don't fail if unavailable (demo mode)
         try {
           // 2️⃣ Fetch enrolled courses
-          const courseResponse = await fetch(`${API_BASE_URL}/enrolled/${userId}`, {
+          const courseResponse = await fetch(`${API_BASE_URL}/courses/enrolled/${userId}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const Dashboard = () => {
 
         try {
           // 3️⃣ Fetch joined groups
-          const groupResponse = await fetch(`http://localhost:8080/api/groups/joined/${userId}`, {
+          const groupResponse = await fetch(`${API_BASE_URL}/api/groups/joined/${userId}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const Dashboard = () => {
 
         try {
           // 4️⃣ Fetch suggested peers
-          const peersResponse = await fetch(`http://localhost:8080/courses/${userId}/peers`, {
+          const peersResponse = await fetch(`${API_BASE_URL}/courses/${userId}/peers`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

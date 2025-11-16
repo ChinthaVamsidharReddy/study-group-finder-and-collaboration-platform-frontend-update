@@ -6,7 +6,7 @@ import {
 
 const userId = parseInt(localStorage.getItem('userId'));
 const token = localStorage.getItem('token');
-
+const API_BASE=process.env.REACT_APP_API_URL
 const PeerSuggestions = () => {
   const [suggestedPeers, setSuggestedPeers] = useState([]);
   const [currentUserCourses, setCurrentUserCourses] = useState([]);
@@ -22,13 +22,13 @@ const PeerSuggestions = () => {
     try {
       setLoading(true);
 
-      const userResponse = await fetch(`http://localhost:8080/courses/enrolled/${userId}`, {
+      const userResponse = await fetch(`${API_BASE}/courses/enrolled/${userId}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const myCourses = await userResponse.json();
       setCurrentUserCourses(myCourses);
 
-      const peersResponse = await fetch(`http://localhost:8080/courses/${userId}/peers`, {
+      const peersResponse = await fetch(`${API_BASE}/courses/${userId}/peers`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const peersData = await peersResponse.json();
@@ -77,27 +77,27 @@ const PeerSuggestions = () => {
   ).values()];
 
   const PeerCard = ({ peer }) => (
-    <div className="border border-gray-200 dark:border-dark-border rounded-xl p-5 shadow-sm hover:shadow-lg transition-all bg-white dark:bg-dark-card flex flex-col">
+    <div className="border border-border rounded-xl p-5 shadow-sm hover:shadow-lg transition-all bg-card flex flex-col">
       {/* Avatar + Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-3">
-          <div className="h-14 w-14 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
+          <div className="h-14 w-14 rounded-full bg-muted flex items-center justify-center overflow-hidden">
             {peer.avatar ? (
               <img src={peer.avatar} alt={peer.name} className="h-full w-full object-cover" />
             ) : (
-              <UserIcon className="h-6 w-6 text-gray-400" />
+              <UserIcon className="h-6 w-6 text-muted-foreground" />
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{peer.name}</h3>
-            {peer.major && <p className="text-sm text-gray-500 dark:text-dark-textSecondary">{peer.major}</p>}
+            <h3 className="text-lg font-semibold text-foreground">{peer.name}</h3>
+            {peer.major && <p className="text-sm text-muted-foreground">{peer.major}</p>}
           </div>
         </div>
         {/* <span className="text-sm font-medium text-primary-600">{peer.matchScore}% match</span> */}
       </div>
 
       {/* Details */}
-      <div className="flex flex-wrap items-center text-sm text-gray-500 gap-3 mb-3">
+      <div className="flex flex-wrap items-center text-sm text-muted-foreground gap-3 mb-3">
         {peer.universityName && (
           <div className="flex items-center space-x-1">
             <MapPinIcon className="h-4 w-4" />
@@ -107,10 +107,10 @@ const PeerSuggestions = () => {
       </div>
 
       <div className="mb-3">
-        <p className="text-xs font-semibold text-gray-700 mb-1">Courses:</p>
+        <p className="text-xs font-semibold text-foreground mb-1">Courses:</p>
         <div className="flex flex-wrap gap-1">
           {peer.courses.map(course => (
-            <span key={course.id} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-100 text-blue-700">
+            <span key={course.id} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/10 text-primary">
               {course.name}
             </span>
           ))}
@@ -139,24 +139,24 @@ const PeerSuggestions = () => {
       <div className="card p-5">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-white">Find Study Partners</h3>
-            <p className="text-sm text-gray-500 dark:text-dark-textSecondary">Connect with classmates who share your courses</p>
+            <h3 className="text-xl font-bold text-foreground">Find Study Partners</h3>
+            <p className="text-sm text-muted-foreground">Connect with classmates who share your courses</p>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full md:w-auto">
             <div className="relative flex-1 sm:flex-none sm:w-64">
-              <MagnifyingGlassIcon className="h-4 w-4 text-gray-400 absolute left-3 top-3" />
+              <MagnifyingGlassIcon className="h-4 w-4 text-muted-foreground absolute left-3 top-3" />
               <input
                 type="text"
                 placeholder="Search by name or major..."
-                className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="pl-10 pr-4 py-2 w-full border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
               />
             </div>
 
             <select
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               value={filterCourse}
               onChange={e => setFilterCourse(e.target.value)}
             >
@@ -171,11 +171,11 @@ const PeerSuggestions = () => {
 
       {/* Suggested Peers */}
       <div className="card p-5">
-        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Suggested Peers ({filteredPeers.length})</h4>
+        <h4 className="text-lg font-semibold text-foreground mb-4">Suggested Peers ({filteredPeers.length})</h4>
         {filteredPeers.length === 0 ? (
           <div className="text-center py-8">
-            <UserIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">{searchTerm || filterCourse ? 'No peers found matching your criteria.' : 'No peer suggestions available at the moment.'}</p>
+            <UserIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">{searchTerm || filterCourse ? 'No peers found matching your criteria.' : 'No peer suggestions available at the moment.'}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useAuth } from "./AuthContext";
 
 const CoursesContext = createContext();
-const API_BASE_URL = "http://localhost:8080/courses"; 
+const API_BASE_URL = process.env.REACT_APP_API_URL
 export const useCourses = () => useContext(CoursesContext);
 
 export const CoursesProvider = ({ children }) => {
@@ -15,7 +15,7 @@ export const CoursesProvider = ({ children }) => {
       if (!user?.id) return;
       try {
         // const res = await axios.get(`/courses/enrolled/${user.id}`);
-        const res = await axios.get(`${API_BASE_URL}/enrolled/${user.id}`);
+        const res = await axios.get(`${API_BASE_URL}/courses/enrolled/${user.id}`);
         console.log("inside the coursecontect file endolred course are :"+res.data.length)
 
         localStorage.setItem('EnrolledCourses',res.data.length);

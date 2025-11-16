@@ -4,7 +4,8 @@ import { useAuth } from '../../contexts/AuthContext';
 
 // const API_BASE = "http://localhost:8080/api";
 
-const API_BASE="http://localhost:8080/api";
+// const API_BASE="http://localhost:8080/api";
+const API_BASE =process.env.REACT_APP_API_URL
 const token = localStorage.getItem("token");
 
 const SessionCard = ({ session, onRsvp, onViewDetails }) => {

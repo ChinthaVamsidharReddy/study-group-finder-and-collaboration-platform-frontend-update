@@ -27,7 +27,9 @@ import { motion, AnimatePresence } from "framer-motion";
 
 // Backend API Configuration
 // TODO: Move to environment variables (.env file)
-const API_BASE =  "http://localhost:8080/api/groups";
+// const API_BASE =  "http://localhost:8080/api/groups";
+
+const API_BASE=process.env.REACT_APP_API_URL
 
 // ========================================
 // BACKEND INTEGRATION GUIDE - JOIN REQUESTS MODAL
@@ -109,7 +111,7 @@ const LoadingOverlay = ({ message = "Loading..." }) => (
       >
         <motion.div
           animate={{ rotate: 360 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
           className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full"
         />
         <p className="text-gray-700 dark:text-gray-300 font-medium">{message}</p>
@@ -242,13 +244,13 @@ const handleViewJoinRequests = async (group) => {
     try {
       // Backend API calls - fetch all group types in parallel
       const [createdRes, joinedRes, availableRes] = await Promise.all([
-        fetch(`http://localhost:8080/api/groups/created/${userId}`, { 
+        fetch(`${API_BASE}/api/groups/created/${userId}`, { 
           headers: { Authorization: `Bearer ${token}` } 
         }),
-        fetch(`http://localhost:8080/api/groups/joined/${userId}`, { 
+        fetch(`${API_BASE}/api/groups/joined/${userId}`, { 
           headers: { Authorization: `Bearer ${token}` } 
         }),
-        fetch(`http://localhost:8080/api/groups/available/${userId}`, { 
+        fetch(`${API_BASE}/api/groups/available/${userId}`, { 
           headers: { Authorization: `Bearer ${token}` } 
         }),
       ]);
@@ -364,7 +366,7 @@ const handleViewJoinRequests = async (group) => {
     setLoading(true);
     try {
       // API call to join group
-      const res = await fetch(`${API_BASE}/join/${group.id}?userId=${userId}`, {
+      const res = await fetch(`${API_BASE}/api/groups/join/${group.id}?userId=${userId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -418,7 +420,7 @@ const handleViewJoinRequests = async (group) => {
     setLoading(true);
     try {
       // API call to leave group
-      const res = await fetch(`${API_BASE}/leave/${groupId}/${userId}`, {
+      const res = await fetch(`${API_BASE}/api/groups/leave/${groupId}/${userId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -470,7 +472,7 @@ const handleViewJoinRequests = async (group) => {
     setLoading(true);
     try {
       // API call to delete group
-      const res = await fetch(`${API_BASE}/delete/${groupId}/${userId}`, {
+      const res = await fetch(`${API_BASE}/api/groups/delete/${groupId}/${userId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -515,7 +517,7 @@ const handleViewJoinRequests = async (group) => {
     }
     
     try {
-      const res = await fetch(`${API_BASE}/${groupId}/requests`, {
+      const res = await fetch(`${API_BASE}/api/groups/${groupId}/requests`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       
@@ -551,7 +553,7 @@ const handleViewJoinRequests = async (group) => {
     
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/approve/${memberId}?adminId=${userId}`, {
+      const res = await fetch(`${API_BASE}/api/groups/approve/${memberId}?adminId=${userId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -604,7 +606,7 @@ const handleViewJoinRequests = async (group) => {
     
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/reject/${memberId}?adminId=${userId}`, {
+      const res = await fetch(`${API_BASE}/api/groups/reject/${memberId}?adminId=${userId}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -13,7 +13,7 @@ import {
 import MessageBubble from "../chat/MessageBubble"; // adjust import path to your project
 import MessageInput from "../chat/MessageInput"; // optional - if you want to reuse your MessageInput
 
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = process.env.REACT_APP_API_URL
 
 const MessagingWidget = () => {
   const navigate = useNavigate();
@@ -49,10 +49,10 @@ const MessagingWidget = () => {
 
     try {
       const [createdRes, joinedRes] = await Promise.all([  
-        fetch(`${API_BASE}/groups/created/${id}`, {
+        fetch(`${API_BASE}/api/groups/created/${id}`, {
           headers: { Authorization: `Bearer ${t}` },
         }),
-        fetch(`${API_BASE}/groups/joined/${id}`, {
+        fetch(`${API_BASE}/api/groups/joined/${id}`, {
           headers: { Authorization: `Bearer ${t}` },
         }),
       ]);
@@ -87,7 +87,7 @@ const MessagingWidget = () => {
     const token = localStorage.getItem("token");
     setLoadingOld(true);
     try {
-      const res = await fetch(`${API_BASE}/chat/messages/${groupId}`, {
+      const res = await fetch(`${API_BASE}/api/chat/messages/${groupId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) {

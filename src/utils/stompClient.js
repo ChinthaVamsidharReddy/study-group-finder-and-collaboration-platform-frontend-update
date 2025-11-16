@@ -15,7 +15,9 @@ export const getStompClient = (token) => {
   }
 
   console.log("⚡ Creating new STOMP client...");
-  const socket = new SockJS("http://localhost:8080/ws/chat");
+
+  const API_BASE=process.env.REACT_APP_WS_URL 
+  const socket = new SockJS("https://study-group-finder-and-collaboration.onrender.com/ws/chat");
 
   stompClient = new Client({
     webSocketFactory: () => socket,

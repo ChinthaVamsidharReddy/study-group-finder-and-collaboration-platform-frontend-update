@@ -64,11 +64,13 @@ const Login = () => {
           </p>
         </div>
 
-        {error && (
-          <div className="bg-destructive/15 border border-destructive/50 text-destructive px-4 py-3 rounded-lg text-sm">
-            {error}
-          </div>
-        )}
+{error && (
+  <div className="text-red-600 px-4 py-3 rounded-lg text-sm">
+    {error}
+  </div>
+)}
+
+
 
         <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">

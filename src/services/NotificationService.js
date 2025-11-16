@@ -179,9 +179,9 @@ class NotificationService {
       // Backend endpoint: POST /api/notifications/email
       // Headers: Authorization: Bearer {token}, Content-Type: application/json
       // Body: emailData
-      
+      const API_BASE=process.env.REACT_APP_API_BASE_URL
       const token = localStorage.getItem('token');
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api'}/notifications/email`, {
+      const response = await fetch(`${'https://study-group-finder-and-collaboration.onrender.com/api'}/notifications/email`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,

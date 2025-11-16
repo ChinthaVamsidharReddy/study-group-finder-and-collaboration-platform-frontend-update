@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 // const API_BASE = "http://localhost:8080/api";
 
-const API_BASE="http://localhost:8080/api"
+const API_BASE=process.env.REACT_APP_API_URL
 const token = localStorage.getItem("token");
 
 const SessionPoll = ({ session, onVote, onFinalize, isCreator }) => {
@@ -29,7 +29,7 @@ const SessionPoll = ({ session, onVote, onFinalize, isCreator }) => {
     setVoting(true);
 
     try {
-      const res = await fetch(`${API_BASE}/sessions/${session.id}/vote`, {
+      const res = await fetch(`${API_BASE}/api/sessions/${session.id}/vote`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ const SessionPoll = ({ session, onVote, onFinalize, isCreator }) => {
     try {
       const adminId = userId ? parseInt(userId, 10) : null;
       const res = await fetch(
-        `${API_BASE}/sessions/${session.id}/finalize?adminId=${adminId}&selectedStartTime=${new Date(selectedStartTime).toISOString()}`,
+        `${API_BASE}/api/sessions/${session.id}/finalize?adminId=${adminId}&selectedStartTime=${new Date(selectedStartTime).toISOString()}`,
         {
           method: 'POST',
           headers: {

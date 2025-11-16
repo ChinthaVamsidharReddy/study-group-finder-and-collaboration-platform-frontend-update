@@ -20,7 +20,9 @@ import SessionDetailModal from './SessionDetailModal';
 
 
 // const API_BASE = "https://study-group-finder-and-collaboration.onrender.com/api";
-const API_BASE="http://localhost:8080/api"
+// const API_BASE="http://localhost:8080/api"
+
+const API_BASE=process.env.REACT_APP_API_BASE_URL 
 
 const ChatPage = () => {
   const { groupId } = useParams();
@@ -161,7 +163,7 @@ const ChatPage = () => {
   const fetchGroupDetails = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_BASE}/groups/${id}`, {
+      const res = await fetch(`${API_BASE}/api/groups/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -178,7 +180,7 @@ const ChatPage = () => {
   const fetchGroupSessions = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_BASE}/groups/${id}/sessions`, {
+      const res = await fetch(`${API_BASE}/api/groups/${id}/sessions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -194,7 +196,7 @@ const ChatPage = () => {
     const token = localStorage.getItem("token");
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/chat/messages/${id}`, {
+      const res = await fetch(`${API_BASE}/api/chat/messages/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -281,7 +283,7 @@ const ChatPage = () => {
   const fetchGroupPolls = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:8080/polls/group/${id}`, {
+      const res = await fetch(`${API_BASE}/polls/group/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -549,7 +551,7 @@ const ChatPage = () => {
       formData.append("senderId", localStorage.getItem("userId"));
       formData.append("senderName",localStorage.getItem("name"));
 
-      const res = await fetch(`${API_BASE}/files/upload`, {
+      const res = await fetch(`${API_BASE}/api/files/upload`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -590,7 +592,7 @@ const ChatPage = () => {
     try {
       const token = localStorage.getItem("token");
       const userId = user?.id || localStorage.getItem("userId");
-      const res = await fetch(`${API_BASE}/sessions/${session.id}/rsvp`, {
+      const res = await fetch(`${API_BASE}/api/sessions/${session.id}/rsvp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

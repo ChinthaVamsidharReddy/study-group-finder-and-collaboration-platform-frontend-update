@@ -288,7 +288,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { PlusIcon, XMarkIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-const API_BASE_URL = "http://localhost:8080/courses"; 
+const API_BASE_URL = process.env.REACT_APP_API_URL 
 
 const CourseManager = () => {
   const [availableCourses, setAvailableCourses] = useState([]);
@@ -332,7 +332,7 @@ const CourseManager = () => {
   // Load all courses
   const loadCourses = async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/detailes`);
+      const response = await axios.get(`${API_BASE_URL}/courses/detailes`);
       setAvailableCourses(response.data);
     } catch (error) {
       console.error('Error loading courses:', error);
@@ -345,7 +345,7 @@ const CourseManager = () => {
     const USER_ID = localStorage.getItem("userId");
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.get(`${API_BASE_URL}/enrolled/${USER_ID}`,{
+      const response = await axios.get(`${API_BASE_URL}/courses/enrolled/${USER_ID}`,{
       headers: {
         Authorization: `Bearer ${token}`, // send token to backend
       },
@@ -368,7 +368,7 @@ const CourseManager = () => {
     const USER_ID = localStorage.getItem("userId");
     setLoading(true);
     try {
-      await axios.post(`${API_BASE_URL}/enroll/${USER_ID}/${course.courseCode}`);
+      await axios.post(`${API_BASE_URL}/courses/enroll/${USER_ID}/${course.courseCode}`);
       setEnrolledCourses([...enrolledCourses, course]); // update UI
       setError('');
     } catch (error) {
@@ -383,7 +383,7 @@ const CourseManager = () => {
     const USER_ID = localStorage.getItem("userId");
     setLoading(true);
     try {
-      await axios.delete(`${API_BASE_URL}/remove/${USER_ID}/${course.courseCode}`);
+      await axios.delete(`${API_BASE_URL}/courses/remove/${USER_ID}/${course.courseCode}`);
       setEnrolledCourses(enrolledCourses.filter(c => c.id !== course.id));
       setError('');
     } catch (error) {

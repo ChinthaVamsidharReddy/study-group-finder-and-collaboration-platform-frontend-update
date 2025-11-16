@@ -131,7 +131,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import SessionDetailModal from '../chat/SessionDetailModal';
 
 // const API_BASE = 'http://localhost:8080/api';
-const API_BASE="http://localhost:8080/api";
+const API_BASE=process.env.REACT_APP_API_URL
 
 const UserSessionsCalendar = () => {
   const [joinedGroups, setJoinedGroups] = useState([]);
@@ -144,7 +144,7 @@ const UserSessionsCalendar = () => {
   useEffect(() => {
     const load = async () => {
       try {
-        const res = await fetch(`${API_BASE}/groups/joined/${userId}`, {
+        const res = await fetch(`${API_BASE}/api/groups/joined/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const groups = res.ok ? await res.json() : [];
@@ -152,7 +152,7 @@ const UserSessionsCalendar = () => {
 
         const all = [];
         for (const g of groups || []) {
-          const sres = await fetch(`${API_BASE}/groups/${g.id}/sessions`, {
+          const sres = await fetch(`${API_BASE}/api/groups/${g.id}/sessions`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           if (sres.ok) {

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
   // TODO: Backend Integration - API Configuration
   // Spring Boot backend URL - move to environment variables
-  const API_BASE_URL = 'http://localhost:8080';
+  const API_BASE_URL = process.env.REACT_APP_API_URL
 
   // TODO: Backend Integration - Logout
   // API Endpoint: POST /api/auth/logout

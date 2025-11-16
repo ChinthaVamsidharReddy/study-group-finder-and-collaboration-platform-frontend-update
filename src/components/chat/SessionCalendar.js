@@ -8,7 +8,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.tz.setDefault("Asia/Kolkata");
 
-const API_BASE="http://localhost:8080/api"
+const API_BASE=process.env.REACT_APP_API_URL
 // const API_BASE = "http://localhost:8080/api";
 const token = localStorage.getItem("token");
 
@@ -25,7 +25,7 @@ const SessionCalendar = ({ groupId, onSessionClick }) => {
 
   const fetchSessions = async () => {
     try {
-      const res = await fetch(`${API_BASE}/groups/${groupId}/sessions`, {
+      const res = await fetch(`${API_BASE}/api/groups/${groupId}/sessions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {

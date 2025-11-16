@@ -11,7 +11,7 @@ dayjs.extend(timezone);
 
 // const API_BASE = new URL("http://localhost:8080/api").href;
 
-const API_BASE= new URL("http://localhost:8080/api").href;
+const API_BASE= process.env.REACT_APP_API_URL
 const token = localStorage.getItem("token");
 
 const SessionForm = ({ groupId, groups = [], onClose, onSuccess, onSessionCreated, initialDate }) => {
@@ -150,7 +150,7 @@ return dayjs(dateString).format("YYYY-MM-DDTHH:mm:ss");
       payload.endTime = end.format("YYYY-MM-DDTHH:mm:ss");
     }
 
-      const res = await fetch(`${API_BASE}/groups/${selectedGroupId}/sessions`, {
+      const res = await fetch(`${API_BASE}/api/groups/${selectedGroupId}/sessions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
