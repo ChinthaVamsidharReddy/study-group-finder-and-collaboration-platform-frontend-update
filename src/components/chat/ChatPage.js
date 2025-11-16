@@ -283,7 +283,7 @@ const ChatPage = () => {
   const fetchGroupPolls = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_BASE}/polls/group/${id}`, {
+      const res = await fetch(`https://study-group-finder-and-collaboration.onrender.com/polls/group/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
