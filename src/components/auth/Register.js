@@ -87,7 +87,7 @@ const Register = () => {
             Create Account
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Join <span className="font-semibold text-primary">Study Group Finder</span> today 🚀
+            Join <span className="font-semibold text-primary">Study Orbit</span> today 🚀
           </p>
         </div>
 
